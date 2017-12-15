@@ -88,11 +88,11 @@ func printMenu(menu map[string][]item) {
 		if ok {
 			fmt.Println(group)
 			for _, item := range items {
-				fmt.Print("	", item.name)
+				fmt.Print("  ", item.name)
 				for i := 0; i < maxLength-stringLength(item.name); i++ {
 					fmt.Print(" ")
 				}
-				fmt.Println("	", item.price)
+				fmt.Println("  ", item.price)
 			}
 			fmt.Println()
 		}
