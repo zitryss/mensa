@@ -9,6 +9,7 @@ import (
 	"regexp"
 	"strconv"
 	"time"
+	"unicode/utf8"
 
 	"golang.org/x/text/encoding/charmap"
 )
@@ -89,7 +90,8 @@ func printMenu(menu map[string][]item) {
 			fmt.Println(group)
 			for _, item := range items {
 				fmt.Print("  ", item.name)
-				for i := 0; i < maxLength-stringLength(item.name); i++ {
+				stringLength := utf8.RuneCountInString(item.name)
+				for i := 0; i < maxLength-stringLength; i++ {
 					fmt.Print(" ")
 				}
 				fmt.Println("  ", item.price)
@@ -103,19 +105,12 @@ func maxFieldLength(menu map[string][]item) int {
 	maxLength := 0
 	for _, items := range menu {
 		for _, item := range items {
-			l := stringLength(item.name)
+			stringLength := utf8.RuneCountInString(item.name)
+			l := stringLength
 			if maxLength < l {
 				maxLength = l
 			}
 		}
 	}
 	return maxLength
-}
-
-func stringLength(s string) int {
-	counter := 0
-	for range s {
-		counter++
-	}
-	return counter
 }
